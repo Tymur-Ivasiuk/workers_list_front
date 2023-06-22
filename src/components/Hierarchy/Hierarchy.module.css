@@ -1,0 +1,61 @@
+.wrapper {
+  max-width: 1300px;
+  padding: 0 10px;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 30px;
+  padding-bottom: 100px;
+}
+
+.main_header {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 50px;
+}
+
+.content > p {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+.workers_list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.workers_list > li {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  border-radius: 4px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.03);
+}
+.workers_list > li:last-of-type {
+  margin-bottom: 0;
+}
+
+.workers_list > li > p {
+  display: flex;
+  align-items: center;
+  column-gap: 3px;
+}
+.active_worker .arrow {
+  transform: rotateZ(90deg);
+}
+.arrow {
+  width: 20px;
+  transition: 0.3s;
+}
+.minus {
+  width: 20px;
+}
+.workers_list > li .workers_list {
+  padding-left: 20px;
+}
+.have_children {
+  cursor: pointer;
+}
+.havent_children {
+  cursor: default;
+}

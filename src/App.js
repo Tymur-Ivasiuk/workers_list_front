@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import HeaderContainer from "./components/Header/HeaderContainer";
+import { connect } from "react-redux";
+import HierarchyContainer from "./components/Hierarchy/HierarchyContainer";
 
-function App() {
+const App = (props) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-wrapper">
+      <HeaderContainer />
+
+      <main>
+        {props.isAuth ? "true" : "false"}
+        <Routes>
+          <Route path="/hierarchy" element={<HierarchyContainer />} />
+        </Routes>
+      </main>
     </div>
   );
-}
+};
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.isAuth,
+  };
+};
+
+export default connect(mapStateToProps, {})(App);
