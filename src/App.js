@@ -11,7 +11,6 @@ const App = (props) => {
       <HeaderContainer />
 
       <main>
-        {props.isAuth ? "true" : "false"}
         <Routes>
           <Route path="/hierarchy" element={<HierarchyContainer />} />
           <Route path="/alldata" element={<AllDataContainer />}/>

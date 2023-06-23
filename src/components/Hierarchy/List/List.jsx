@@ -5,7 +5,6 @@ import s from "../Hierarchy.module.css";
 import { UncontrolledTreeEnvironment, Tree, StaticTreeDataProvider } from 'react-complex-tree';
 
 const List = (props) => {
-  // debugger;
   return (
     <ol className={s.workers_list}>
       {props.workers.map((worker) => {
@@ -14,6 +13,7 @@ const List = (props) => {
             worker={worker}
             getNestedWorkers={props.getNestedWorkers}
             deleteNestedWorkers={props.deleteNestedWorkers}
+            setDropId={props.setDropId} setDragId={props.setDragId}
           />
         );
       })}
@@ -27,59 +27,66 @@ const ListItem = (props) => {
   };
 
   const onClickDeleteData = (e) => {
-    console.log("delete");
     props.deleteNestedWorkers(props.worker.id);
   };
 
+
   // drag n drop
-  const dragOverHandler = (e, ) => {
+  const dragOverHandler = (e) => {
     e.preventDefault()
-    // console.log(e)
+    if(e.target.tagName == "SPAN") {
+      e.target.parentElement.style.boxShadow = "0px 4px 3px black"
+    }
   }
   const dragLeaveHandler = (e, ) => {
-    if(e.target.tagName == "LI") {
-      e.target.style.boxShadow = "none"
-    } else {
-      e.target.parentElement.boxShadow = "none"
+    if(e.target.tagName == "SPAN") {
+      e.target.parentElement.style.boxShadow = "none"
     }
   }
-  const dragStartHandler = (e, worker) => {
-    console.log(worker)
+  const dragStartHandler = (e, workerId) => {
+    props.setDragId(workerId)
   }
-  const dragEndHandler = (e, ) => {
-    if(e.target.tagName == "LI") {
-      e.target.style.boxShadow = "none"
-    } else {
-      e.target.parentElement.boxShadow = "none"
+  const dragEndHandler = (e) => {
+    if(e.target.tagName == "SPAN") {
+      e.target.parentElement.style.boxShadow = "none"
     }
   }
-  const dropHandler = (e, worker) => {
-    console.log("DROP", worker)
+  const dropHandler = (e, workerId) => {
     e.preventDefault()
+    if(e.target.tagName == "SPAN") {
+      e.target.parentElement.style.boxShadow = "none"
+    }
+    props.setDropId(workerId)
   }
 
   
 
   return (
     <li
-      draggable={true}
-      onDragOver={e => dragOverHandler(e)}
-      onDragLeave={e => dragLeaveHandler(e)}
-      onDragStart={e => dragStartHandler(e, props.worker)}
-      onDragEnd={e => dragEndHandler(e)}
-      onDrop={e => dropHandler(e, props.worker)}
-
       className={
         props.worker.haveChildren ? s.have_children : s.havent_children
       }
     >
       <p
+        draggable={true}
+        onDragOver={(e) => dragOverHandler(e)}
+        onDragLeave={(e) => dragLeaveHandler(e)}
+        onDragStart={(e) => dragStartHandler(e, props.worker.id)}
+        onDragEnd={(e) => dragEndHandler(e)}
+        onDrop={(e) => dropHandler(e, props.worker.id)}
+
         className={
           props.worker.children &&
           props.worker.children.length &&
           s.active_worker
         }
-        onClick={(props.worker.haveChildren && !(props.worker.children && props.worker.children.length)) ? onClickAppendData : ((props.worker.children && props.worker.children.length) ? onClickDeleteData : undefined)
+        onClick={
+          props.worker.haveChildren &&
+          !(props.worker.children && props.worker.children.length)
+            ? onClickAppendData
+            : props.worker.children && props.worker.children.length
+            ? onClickDeleteData
+            : undefined
         }
       >
         {props.worker.haveChildren ? (
@@ -87,13 +94,20 @@ const ListItem = (props) => {
         ) : (
           <img src={minus} className={s.minus} />
         )}
-        <span>{props.worker.first_name + " " + props.worker.last_name + ' -> ' + props.worker.profession}</span>
+        <span>
+          {props.worker.first_name +
+            " " +
+            props.worker.last_name +
+            " -> " +
+            props.worker.profession}
+        </span>
       </p>
       {props.worker.children && (
         <List
           workers={props.worker.children}
           getNestedWorkers={props.getNestedWorkers}
           deleteNestedWorkers={props.deleteNestedWorkers}
+          setDropId={props.setDropId} setDragId={props.setDragId}
         />
       )}
     </li>

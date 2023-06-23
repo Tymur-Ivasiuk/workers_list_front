@@ -3,7 +3,7 @@ const SET_USER_DATA = "SET-USER-DATA";
 let initialState = {
   userId: null,
   email: null,
-  login: "null",
+  login: "fakelogin",
   isAuth: false,
   isFetching: false,
   authToken: null,

@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import Hierarchy from "./Hierarchy";
 import React from "react";
+import {setDropId} from "../../redux/hierarchyReducer";
 
 class HierarchyContainer extends React.Component {
   render() {
@@ -14,4 +15,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {})(HierarchyContainer);
+export default connect(mapStateToProps, {
+  setDropId
+})(HierarchyContainer);

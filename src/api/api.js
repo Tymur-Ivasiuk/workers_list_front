@@ -26,4 +26,14 @@ export const WorkersAPI = {
       .get(`worker/${workerId}/getnodesids`)
       .then((response) => response.data);
   },
+  getWorkerDetail(workerId) {
+    return instance.get(`worker/${workerId}/`)
+      .then(response => response.data)
+  },
+  updateWorker(workerId, workerData) {
+    return instance.put(`worker/${workerId}/`, {
+      ...workerData
+    })
+
+  }
 };
