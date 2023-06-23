@@ -2,6 +2,7 @@ import React from "react";
 import arrow from "../../../assets/img/arrow.svg";
 import minus from "../../../assets/img/minus.svg";
 import s from "../Hierarchy.module.css";
+import { UncontrolledTreeEnvironment, Tree, StaticTreeDataProvider } from 'react-complex-tree';
 
 const List = (props) => {
   // debugger;
@@ -30,10 +31,44 @@ const ListItem = (props) => {
     props.deleteNestedWorkers(props.worker.id);
   };
 
-  // debugger;
+  // drag n drop
+  const dragOverHandler = (e, ) => {
+    e.preventDefault()
+    // console.log(e)
+  }
+  const dragLeaveHandler = (e, ) => {
+    if(e.target.tagName == "LI") {
+      e.target.style.boxShadow = "none"
+    } else {
+      e.target.parentElement.boxShadow = "none"
+    }
+  }
+  const dragStartHandler = (e, worker) => {
+    console.log(worker)
+  }
+  const dragEndHandler = (e, ) => {
+    if(e.target.tagName == "LI") {
+      e.target.style.boxShadow = "none"
+    } else {
+      e.target.parentElement.boxShadow = "none"
+    }
+  }
+  const dropHandler = (e, worker) => {
+    console.log("DROP", worker)
+    e.preventDefault()
+  }
+
+  
 
   return (
     <li
+      draggable={true}
+      onDragOver={e => dragOverHandler(e)}
+      onDragLeave={e => dragLeaveHandler(e)}
+      onDragStart={e => dragStartHandler(e, props.worker)}
+      onDragEnd={e => dragEndHandler(e)}
+      onDrop={e => dropHandler(e, props.worker)}
+
       className={
         props.worker.haveChildren ? s.have_children : s.havent_children
       }

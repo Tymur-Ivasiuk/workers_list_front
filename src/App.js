@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import { connect } from "react-redux";
 import HierarchyContainer from "./components/Hierarchy/HierarchyContainer";
+import AllDataContainer from "./components/AllData/AllDataContainer";
 
 const App = (props) => {
   return (
@@ -13,6 +14,7 @@ const App = (props) => {
         {props.isAuth ? "true" : "false"}
         <Routes>
           <Route path="/hierarchy" element={<HierarchyContainer />} />
+          <Route path="/alldata" element={<AllDataContainer />}/>
         </Routes>
       </main>
     </div>

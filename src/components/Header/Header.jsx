@@ -9,7 +9,7 @@ const Header = (props) => {
         <NavLink to="/hierarchy" className={s.nav_link}>
           Ієрархія
         </NavLink>
-        <NavLink to="/data" className={s.nav_link}>
+        <NavLink to="/alldata" className={s.nav_link}>
           Список
         </NavLink>
       </div>
